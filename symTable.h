@@ -6,8 +6,6 @@ class Symbol_node {
    public:
       Symbol_node(void);
       Symbol_node(char *); 
-      Symbol_node(char *, int, VALUE); 
-      //~Symbol_node(void);
       void putval(VALUE);
       VALUE getval(void);
       char * getid(void);
@@ -30,7 +28,7 @@ class Symbol_table {
       void remove(char *);
       Symbol_ptr lookup(char *);
       void dump_table(void);
-		void print(int);
+      void print(Symbol_node*);
    private:
       Symbol_ptr *table;
 };

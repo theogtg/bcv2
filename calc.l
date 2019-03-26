@@ -20,6 +20,7 @@ digit	[0-9]
 number	{digit}+
 
 %%
+"dump"		{return(DUMP);}
 "quit"		{return(QUIT);}
 {ws}		{/* no action */}
 {id}		{yylval.symbol_ptr=table.insert(yytext);return(ID);}

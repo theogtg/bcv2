@@ -21,16 +21,17 @@ void yyerror(const char *);
 
 %token <symbol_ptr> ID
 %token <val> NUMBER
-%token EQUAL PLUS MINUS MULT DIV MOD CARROT NEWLINE LPAREN RPAREN QUIT
+%token EQUAL PLUS MINUS MULT DIV MOD CARROT NEWLINE LPAREN RPAREN QUIT DUMP
 %type <val> expr term sfactor efactor pfactor stmt
 
 %%
 stmt_list	:	stmt NEWLINE
 		|	stmt_list stmt NEWLINE
 		;
-stmt		:	ID EQUAL expr	{$1->putval($3);cout << "=" << $3.ivalue << endl;}
+stmt		:	ID EQUAL expr	{$1->putval($3);cout << "\t"  << $1->getid() << "=" << $1->getval().ivalue << endl;}
 		| 	expr	{cout << "=" << $1.ivalue << endl;}
 		|	QUIT	{cout << "bye!" << endl; exit(0);}
+		|	DUMP	{table.dump_table();}
 		;
 expr		:	expr PLUS term	{$$.ivalue = $1.ivalue+$3.ivalue;}
 		|	expr MINUS term {$$.ivalue = $1.ivalue-$3.ivalue;}
@@ -49,7 +50,7 @@ efactor		:	efactor CARROT pfactor	{$$.ivalue = pow($1.ivalue,$3.ivalue);}
 		;
 pfactor		:	LPAREN expr RPAREN	{$$.ivalue=$2.ivalue;}
 		|	NUMBER	{$$.ivalue=$1.ivalue;}
-		|	ID	{cout << "here" << endl;}
+		|	ID	{$$.ivalue=$1->getval().ivalue;}
 		;
 %%
 
