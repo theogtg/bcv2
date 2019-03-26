@@ -1,0 +1,65 @@
+%{
+#include<ctype.h>
+#include<iostream>
+#include<stdio.h>
+#include<cmath>
+#include "general.h"
+#include "symTable.h"
+using namespace std;
+
+Symbol_table table;
+
+int yylex(void);
+int yyparse(void);
+void yyerror(const char *);
+%}
+
+%union {
+   VALUE val;
+   Symbol_ptr symbol_ptr;
+}
+
+%token <symbol_ptr> ID
+%token <val> NUMBER
+%token EQUAL PLUS MINUS MULT DIV MOD CARROT NEWLINE LPAREN RPAREN QUIT
+%type <val> expr term sfactor efactor pfactor stmt
+
+%%
+stmt_list	:	stmt NEWLINE
+		|	stmt_list stmt NEWLINE
+		;
+stmt		:	ID EQUAL expr	{$1->putval($3);cout << "=" << $3.ivalue << endl;}
+		| 	expr	{cout << "=" << $1.ivalue << endl;}
+		|	QUIT	{cout << "bye!" << endl; exit(0);}
+		;
+expr		:	expr PLUS term	{$$.ivalue = $1.ivalue+$3.ivalue;}
+		|	expr MINUS term {$$.ivalue = $1.ivalue-$3.ivalue;}
+		|	term	{$$.ivalue = $1.ivalue;}
+		;
+term		:	term MULT sfactor	{$$.ivalue = $1.ivalue*$3.ivalue;}
+		|	term MOD sfactor	{$$.ivalue = $1.ivalue%$3.ivalue;}
+		|	term DIV sfactor {$$.ivalue = $1.ivalue/$3.ivalue;}
+		|	sfactor	{$$.ivalue = $1.ivalue;}
+		;
+sfactor		:	MINUS efactor {$$.ivalue = -$2.ivalue;}
+		|	efactor
+		;
+efactor		:	efactor CARROT pfactor	{$$.ivalue = pow($1.ivalue,$3.ivalue);}
+		|	pfactor
+		;
+pfactor		:	LPAREN expr RPAREN	{$$.ivalue=$2.ivalue;}
+		|	NUMBER	{$$.ivalue=$1.ivalue;}
+		|	ID	{cout << "here" << endl;}
+		;
+%%
+
+int main(void)
+{
+yyparse();
+return 0;
+}
+
+void yyerror(const char *message)
+{
+cout << message << endl;
+}
