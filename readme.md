@@ -1,3 +1,13 @@
-#Readme
-##By Tyler Griffith and Tom Canto
-Tried our best to get piece all the parts together but we could not get it to work. We got our symbol table functioning perfectly but we could not link it to bc due to random errors that we could not debug.
+Working version of bcv2
+
+To run: make
+To remove old files: make clean
+To run after making: bc
+To dump whole table: dump
+To quit out of program: quit
+
+syntax to create variable:
+{id} = {expr}
+
+syntax to check variable value:
+{id}
