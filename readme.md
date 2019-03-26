@@ -1,4 +1,4 @@
-<<Recreated version of default bc program that comes with linux using lex and yacc
+##Recreated version of default bc program that comes with linux using lex and yacc
 
 To run: make
 To remove old files: make clean
