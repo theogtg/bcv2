@@ -50,7 +50,7 @@ efactor		:	efactor CARROT pfactor	{$$.ivalue = pow($1.ivalue,$3.ivalue);}
 		;
 pfactor		:	LPAREN expr RPAREN	{$$.ivalue=$2.ivalue;}
 		|	NUMBER	{$$.ivalue=$1.ivalue;}
-		|	ID	{$$.ivalue=$1->getval().ivalue;}
+		|	ID	{cout << "\t" << $1->getid();$$.ivalue=$1->getval().ivalue;}
 		;
 %%
 

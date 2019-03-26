@@ -22,7 +22,7 @@ typedef Symbol_node * Symbol_ptr;
 class Symbol_table {
    public:
       Symbol_table(void);
-      //~Symbol_table(void);
+      ~Symbol_table(void);
       int hash(char *);
       Symbol_ptr insert(char *);
       void remove(char *);

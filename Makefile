@@ -19,4 +19,4 @@ symTable.o:				symTable.cpp symTable.h general.h
 			$(CC) -c symTable.cpp
 
 clean:
-	rm bc lex.yy.* calc.tab.*
+	rm bc lex.yy.* calc.tab.* symTable.o
